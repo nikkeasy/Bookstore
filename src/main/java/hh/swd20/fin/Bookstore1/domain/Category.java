@@ -9,42 +9,54 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-
 @Entity
 public class Category {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long kategoriaid; 
-	private String nimi; 
+	private Long categoryId; 
+	private String name; 
 	
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "kategoria")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
 	private List <Book> books; 
 	
-	public Category(String nimi) {
+	public Category () {}
+	
+	public Category(String name) {
 		super();
-		this.nimi = nimi;
+		this.name = name;
 		
 	}
 
-	public Long getKategoriaid() {
-		return kategoriaid;
+
+	public Long getCategoryid() {
+		return categoryId;
 	}
-	public void setKategoriaid(Long kategoriaid) {
-		this.kategoriaid = kategoriaid;
+
+	public void setcategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
-	public String getNimi() {
-		return nimi;
+
+	public String getName() {
+		return name;
 	}
-	public void setNimi(String nimi) {
-		this.nimi = nimi;
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 	
 	@Override
 	public String toString() {
-		return "Kategoria [kategoriaid=" + kategoriaid + ", nimi=" + nimi + "]";
+		return "Category [categoryId=" + categoryId + ", name=" + name + "]";
 	}
-
-
-	
 }
+	
+	
+	

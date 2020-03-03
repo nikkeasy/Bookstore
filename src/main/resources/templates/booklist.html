@@ -19,24 +19,26 @@
 	<table class="table table-striped"> 
 		<tr> 
 			<th> Id </th>
-			<th> Author	</th>
-			<th> Isbn	</th>
-			<th> Price	</th>
 			<th> Title	</th>
+			<th> Author	</th>
+			<th> ISBN	</th>
+			<th> Price	</th>
 			<th> Year	</th>
+			<th> Category </th>
 		</tr>
 		
 		
-		<tr th:each="book : ${books}"> 
+	<tr th:each="book : ${books}"> 
 		<td th:text="${book.id}">	ID</td>	
+		<td th:text="${book.name}">	Title</td>
 		<td th:text="${book.author}"> Author</td>
 		<td th:text="${book.isbn}">	ISBN</td>
 		<td th:text="${book.price}"> Price</td>
-		<td th:text="${book.title}">	Title</td>
 		<td th:text="${book.year}">	Year</td>
+		<td th:text="${book.category.name}"> Category </td>
 		<td><a th:href="@{/deletebook/{id}(id=${book.id})}" class="btn btn-danger"> Delete  </a></td>
 		<td><a th:href="@{/editbook/{id}(id=${book.id})}" class="btn btn-warning"> Edit </a></td>
-		</tr>
+	</tr>
 	</table>
 	<div class="container"> 
 	<a href="addbook" class="btn btn-success">  &nbsp;Add Book</a>

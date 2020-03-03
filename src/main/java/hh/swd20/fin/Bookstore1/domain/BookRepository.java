@@ -6,5 +6,5 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
 	
 	
-	public Book findById (String id);
+	public Book findByName (String name);
 }
