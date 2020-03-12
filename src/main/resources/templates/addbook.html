@@ -1,14 +1,15 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <title>Add Book</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    
 </head>
 <body>
 	<h1>Book details </h1>
-	<form action="#" th:action="@{/addbook}"  th:object= ${book} method="post">
+	<form action="#" th:action="@{save}"  th:object= ${book} method="post">
 	<p>Author:<input type="text" th:field="${book.author}" /></p>
 	<p>ISBN: <input type="text" th:field="${book.isbn}" /></p>
 	<p>Price: <input type="text" th:field="${book.price}" /></p>

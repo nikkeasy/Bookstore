@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,29 +33,39 @@ public class BookController {
 	private CategoryRepository categoryRepository;
 	
 	
-	@RequestMapping(value="/books")
+	// Show all books (login required) 
+	
+	@RequestMapping(value="/login")
+	public String login () {
+		return "login";
+	}
+	
+	@RequestMapping(value="/booklist")
 	public String getAllBooks(Model model) { 		// Haetaan muistipohjaisesta tietokannasta kirjat listaan 
 	model.addAttribute("books", bookRepository.findAll());							// Palautetaan sopivan käyttöliittymätemplaten (html) nimi
 	return "booklist";
 	}
 	
 
-	// RESTful service to get all books
+// RESTful service to get all books
+	
     @RequestMapping(value="/books", method = RequestMethod.GET)
     public @ResponseBody List<Book> studentListRest() {	
         return (List<Book>) bookRepository.findAll();
     }    
-
-	// RESTful service to get a book by id
+	 
+	
+    // RESTful service to get a book by id
     @RequestMapping(value="/book/{id}", method = RequestMethod.GET)
-    public @ResponseBody Optional<Book> findStudentRest(@PathVariable Long id) {	
-    	return bookRepository.findById(id);
+    public @ResponseBody Optional<Book> findStudentRest(@PathVariable Long BookId) {	
+    	return bookRepository.findById(BookId);
     }       
 	
+    
 
 	
 	// tyhjän kirjalomakkeen muodostaminen 
-	@RequestMapping(value= "/addbook")
+	@RequestMapping(value= "/add")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book()); 
 		model.addAttribute("categories", categoryRepository.findAll());
@@ -63,21 +74,22 @@ public class BookController {
 	}
 	
 	// Kirjalomakkeella syötettyjen tietojen vastaanotto ja TALLENNUS (POST)!!!
-	@RequestMapping(value = "/addbook", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveBook(@ModelAttribute Book book) { 
 		bookRepository.save(book);  	// Talletetaan YHDEN kirjan tiedot h2-tietokantaan 
-		return "redirect:/books"; // books-endpointin kutsu 
+		return "redirect:/booklist"; // booklist-endpointin kutsu 
 	}
 	
 	// KIRJAN POISTO 
-	@RequestMapping(value ="/deletebook/{id}", method = RequestMethod.GET)
-	public String deleteBook(@PathVariable("id") Long bookId) {
+	@RequestMapping(value ="/delete/{id}", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
+	public String deleteBook(@PathVariable("id") Long bookId, Model model) {
 		bookRepository.deleteById(bookId);
-		return "redirect:../books";
+		return "redirect:../booklist";
 	}
 	
 	// KIRJAN MUOKKAUS 
-		@RequestMapping(value="/editbook/{id}")
+		@RequestMapping(value="/edit/{id}")
 		public String editBook(@PathVariable("id") Long bookId, Model model) {
 		    model.addAttribute("book", bookRepository.findById(bookId).get()); // Miksi eri metodi kuin departmentsissä? 
 		    model.addAttribute("categories", categoryRepository.findAll()); // Miksi tässä findAll 
@@ -89,7 +101,7 @@ public class BookController {
 		public String saveEdit(@PathVariable("id")Long id, Book book, Model model) {
 			book.setId(id);
 			bookRepository.save(book);
-			return "redirect:../books";
+			return "redirect:../booklist";
 		}
 	
 }

@@ -1,21 +1,20 @@
 <!DOCTYPE HTML> 
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
 
 <head> 
- <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
-<title> Book List </title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+	<title> Book List </title>
+ 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
 </head>
-
 <body> 
-
-
-
 	<div align="center"> 
-	<h1> Books </h1>
+		<h1> Books </h1>
 	</div>
-	<div class="container">
+	<div align="center"> 
+			<h3 th:inline="text"> Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+	</div>
+	
+	
 	<table class="table table-striped"> 
 		<tr> 
 			<th> Id </th>
@@ -25,24 +24,26 @@
 			<th> Price	</th>
 			<th> Year	</th>
 			<th> Category </th>
+		    <th sec:authorize="hasRole('ADMIN')"/>
 		</tr>
-		
-		
-	<tr th:each="book : ${books}"> 
-		<td th:text="${book.id}">	ID</td>	
-		<td th:text="${book.name}">	Title</td>
-		<td th:text="${book.author}"> Author</td>
-		<td th:text="${book.isbn}">	ISBN</td>
-		<td th:text="${book.price}"> Price</td>
-		<td th:text="${book.year}">	Year</td>
-		<td th:text="${book.category.name}"> Category </td>
-		<td><a th:href="@{/deletebook/{id}(id=${book.id})}" class="btn btn-danger"> Delete  </a></td>
-		<td><a th:href="@{/editbook/{id}(id=${book.id})}" class="btn btn-warning"> Edit </a></td>
+	<tr th:each = "book : ${books}"> 
+		<td th:text="${book.id}"> </td>	
+		<td th:text="${book.name}">	</td>
+		<td th:text="${book.author}"> </td>
+		<td th:text="${book.isbn}">	</td>
+		<td th:text="${book.price}"> </td>
+		<td th:text="${book.year}">	</td>
+		<td th:text="${book.category.name}"> </td>
+		<td sec:authorize="hasRole('ADMIN')"><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a></td>
+		<td sec:authorize="hasRole('ADMIN')"><a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-warning"> Edit </a></td>
 	</tr>
 	</table>
-	<div class="container"> 
-	<a href="addbook" class="btn btn-success">  &nbsp;Add Book</a>
-	</div>
+
+	<a href="/add" class="btn btn-success">  &nbsp;Add Book</a>
+		<div class="col-md-4" style="padding:20px 0"> 
+		<form th:action="@{/logout}" method="post"> 
+			<input type="submit" value="Sign Out" class="btn btn-danger"/>
+		</form>
 	</div>
 </body>
  </html>

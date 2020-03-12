@@ -1,16 +1,18 @@
 package hh.swd20.fin.Bookstore1;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import hh.swd20.fin.Bookstore1.domain.Book;
 import hh.swd20.fin.Bookstore1.domain.BookRepository;
-import hh.swd20.fin.Bookstore1.domain.Category; 
+import hh.swd20.fin.Bookstore1.domain.Category;
 import hh.swd20.fin.Bookstore1.domain.CategoryRepository;
+
+
 
 @SpringBootApplication
 public class Bookstore1Application {
