@@ -1,6 +1,7 @@
 package hh.swd20.fin.Bookstore1.web;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import hh.swd20.fin.Bookstore1.domain.Book;
 import hh.swd20.fin.Bookstore1.domain.BookRepository;
@@ -30,19 +32,28 @@ public class BookController {
 	private CategoryRepository categoryRepository;
 	
 	
-	@RequestMapping(value="/books", method = RequestMethod.GET)
+	@RequestMapping(value="/books")
 	public String getAllBooks(Model model) { 		// Haetaan muistipohjaisesta tietokannasta kirjat listaan 
 	model.addAttribute("books", bookRepository.findAll());							// Palautetaan sopivan käyttöliittymätemplaten (html) nimi
 	return "booklist";
 	}
 	
+
+	// RESTful service to get all books
+    @RequestMapping(value="/books", method = RequestMethod.GET)
+    public @ResponseBody List<Book> studentListRest() {	
+        return (List<Book>) bookRepository.findAll();
+    }    
+
+	// RESTful service to get a book by id
+    @RequestMapping(value="/book/{id}", method = RequestMethod.GET)
+    public @ResponseBody Optional<Book> findStudentRest(@PathVariable Long id) {	
+    	return bookRepository.findById(id);
+    }       
 	
-	//List<Book> books = (List <Book>) bookRepository.findAll();
-	// Laitetaan model-mappiin autolista thymeleaf-templatea varten 
+
 	
 	// tyhjän kirjalomakkeen muodostaminen 
-	
-	
 	@RequestMapping(value= "/addbook")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book()); 
