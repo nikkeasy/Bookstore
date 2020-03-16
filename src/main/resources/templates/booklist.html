@@ -24,7 +24,7 @@
 			<th> Price	</th>
 			<th> Year	</th>
 			<th> Category </th>
-		    <th sec:authorize="hasRole('ADMIN')"/>
+		    <th sec:authorize="hasAuthority('ADMIN')"/>
 		</tr>
 	<tr th:each = "book : ${books}"> 
 		<td th:text="${book.id}"> </td>	
@@ -34,8 +34,8 @@
 		<td th:text="${book.price}"> </td>
 		<td th:text="${book.year}">	</td>
 		<td th:text="${book.category.name}"> </td>
-		<td sec:authorize="hasRole('ADMIN')"><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a></td>
-		<td sec:authorize="hasRole('ADMIN')"><a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-warning"> Edit </a></td>
+		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a></td>
+		<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-warning"> Edit </a></td>
 	</tr>
 	</table>
 

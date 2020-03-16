@@ -11,6 +11,8 @@ import hh.swd20.fin.Bookstore1.domain.Book;
 import hh.swd20.fin.Bookstore1.domain.BookRepository;
 import hh.swd20.fin.Bookstore1.domain.Category;
 import hh.swd20.fin.Bookstore1.domain.CategoryRepository;
+import hh.swd20.fin.Bookstore1.domain.User;
+import hh.swd20.fin.Bookstore1.domain.UserRepository;
 
 
 
@@ -22,9 +24,10 @@ public class Bookstore1Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Bookstore1Application.class, args);
 	}
+	
 
 	@Bean
-	public CommandLineRunner demo(BookRepository bookRepository, CategoryRepository categoryRepository) {
+	public CommandLineRunner demo(BookRepository bookRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
 		return (args) -> {
 			
 			log.info("Save a few categories");
@@ -42,7 +45,11 @@ public class Bookstore1Application {
 			bookRepository.save(new Book("How to make mon€y", "Mukhtar Mahmud", 2001, "10101010-1", 24.95, categoryRepository.findByName("Oppaat").get(0)));
 			bookRepository.save(new Book("Vigilante", "Kady Cross", 2017, "13: 9781489220820", 24.95, categoryRepository.findByName("Realistinen fiktio").get(0)));
 
-			
+			// Create users 
+			User user1 = new User("user", "$2a$08$4QKKZS26cCW6by3/TR7yM.T0wG/ToijLXHsFsjz6sDJ1ZnkVzyUt.", "USER", "user123@gmail.com"); // password2 - Hash generated from:
+			User user2 = new User("admin", "$2a$08$NUlbyfOMUrlTOuT3kE/3ie8T7LBtLxclqgNccJ7PNknfZI5VmQHGm", "ADMIN", "adminboi@stonks.fi"); // password1 - https://www.dailycred.com/article/bcrypt-calculator
+			userRepository.save(user1);
+			userRepository.save(user2);
 			
 			
 

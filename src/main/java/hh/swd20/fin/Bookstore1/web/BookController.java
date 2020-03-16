@@ -33,6 +33,8 @@ public class BookController {
 	private CategoryRepository categoryRepository;
 	
 	
+	
+	
 	// Show all books (login required) 
 	
 	@RequestMapping(value="/login")
