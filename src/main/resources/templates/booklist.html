@@ -40,10 +40,19 @@
 	</table>
 
 	<a href="/add" class="btn btn-success">  &nbsp;Add Book</a>
-		<div class="col-md-4" style="padding:20px 0"> 
+	<div class="col-md-4" style="padding:10px 0"> 
 		<form th:action="@{/logout}" method="post"> 
 			<input type="submit" value="Sign Out" class="btn btn-danger"/>
 		</form>
+		</div> 
+	<div class="col-md-1" style="padding:0px 0"> 
+		
+		<form th:action="@{/jsonlist}" method="post"> 
+			<input type="submit" value="JSON data" class="btn btn-default"/>
+		</form>
 	</div>
+	
+	
+	
 </body>
  </html>
